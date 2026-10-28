@@ -1,0 +1,240 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Catppuccin Mocha, rounded pills. Line 1 shows context, line 2 is where you type.
+#
+#   (~/code/app)(main !2 ?1)(node v22)                  took 3s  14:02
+#  ❯
+
+palette = "catppuccin_mocha"
+add_newline = true
+command_timeout = 800
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$git_state\
+$python\
+$nodejs\
+$bun\
+$deno\
+$rust\
+$golang\
+$java\
+$kotlin\
+$php\
+$ruby\
+$lua\
+$c\
+$docker_context\
+$kubernetes\
+$aws\
+$gcloud\
+$nix_shell\
+$fill\
+$status\
+$jobs\
+$cmd_duration\
+$time
+$character"""
+
+[fill]
+symbol = " "
+
+[character]
+success_symbol = "[❯](bold mauve)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
+
+# Only shown over SSH or as root
+[username]
+style_user = "bg:red fg:crust bold"
+style_root = "bg:red fg:crust bold"
+format = "[](fg:red)[ $user]($style)[](fg:red) "
+
+[hostname]
+ssh_only = true
+ssh_symbol = "󰒋 "
+style = "bg:peach fg:crust bold"
+format = "[](fg:peach)[$ssh_symbol$hostname]($style)[](fg:peach) "
+
+[directory]
+style = "bg:blue fg:crust bold"
+read_only = " 󰌾"
+read_only_style = "bg:blue fg:crust"
+format = "[](fg:blue)[ $path]($style)[$read_only]($read_only_style)[](fg:blue) "
+truncation_length = 4
+truncation_symbol = "…/"
+truncate_to_repo = true
+fish_style_pwd_dir_length = 1
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+
+# git_branch opens the pill and git_status closes it, so a clean repo still renders whole
+[git_branch]
+symbol = " "
+style = "bg:mauve fg:crust bold"
+format = "[](fg:mauve)[$symbol$branch(:$remote_branch)]($style)"
+
+[git_status]
+style = "bg:mauve fg:crust"
+format = "[( $all_status$ahead_behind)]($style)[](fg:mauve) "
+conflicted = "="
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?${count}"
+stashed = "≡"
+modified = "!${count}"
+staged = "+${count}"
+renamed = "»${count}"
+deleted = "✘${count}"
+
+[git_state]
+style = "bold yellow"
+format = '[\($state( $progress_current/$progress_total)\)]($style) '
+
+# Language/runtime pills, shown only inside matching projects
+[python]
+symbol = " "
+style = "bg:green fg:crust"
+format = "[](fg:green)[$symbol$pyenv_prefix($version)( \\($virtualenv\\))]($style)[](fg:green) "
+
+[nodejs]
+symbol = " "
+style = "bg:green fg:crust"
+format = "[](fg:green)[$symbol($version)]($style)[](fg:green) "
+
+[bun]
+symbol = " "
+style = "bg:green fg:crust"
+format = "[](fg:green)[$symbol($version)]($style)[](fg:green) "
+
+[deno]
+symbol = " "
+style = "bg:green fg:crust"
+format = "[](fg:green)[$symbol($version)]($style)[](fg:green) "
+
+[rust]
+symbol = "󱘗 "
+style = "bg:green fg:crust"
+format = "[](fg:green)[$symbol($version)]($style)[](fg:green) "
+
+[golang]
+symbol = " "
+style = "bg:green fg:crust"
+format = "[](fg:green)[$symbol($version)]($style)[](fg:green) "
+
+[java]
+symbol = " "
+style = "bg:green fg:crust"
+format = "[](fg:green)[$symbol($version)]($style)[](fg:green) "
+
+[kotlin]
+symbol = " "
+style = "bg:green fg:crust"
+format = "[](fg:green)[$symbol($version)]($style)[](fg:green) "
+
+[php]
+symbol = " "
+style = "bg:green fg:crust"
+format = "[](fg:green)[$symbol($version)]($style)[](fg:green) "
+
+[ruby]
+symbol = " "
+style = "bg:green fg:crust"
+format = "[](fg:green)[$symbol($version)]($style)[](fg:green) "
+
+[lua]
+symbol = " "
+style = "bg:green fg:crust"
+format = "[](fg:green)[$symbol($version)]($style)[](fg:green) "
+
+[c]
+symbol = " "
+style = "bg:green fg:crust"
+format = "[](fg:green)[$symbol($version)]($style)[](fg:green) "
+
+# Infra pills
+[docker_context]
+symbol = " "
+style = "bg:sapphire fg:crust"
+format = "[](fg:sapphire)[$symbol$context]($style)[](fg:sapphire) "
+
+[kubernetes]
+disabled = false
+symbol = "󱃾 "
+style = "bg:sapphire fg:crust"
+format = "[](fg:sapphire)[$symbol$context( \\($namespace\\))]($style)[](fg:sapphire) "
+detect_files = ["k8s", "kustomization.yaml", "Chart.yaml", "skaffold.yaml"]
+
+[aws]
+symbol = " "
+style = "bg:peach fg:crust"
+format = "[](fg:peach)[$symbol($profile)( \\($region\\))]($style)[](fg:peach) "
+
+[gcloud]
+disabled = true
+
+[nix_shell]
+symbol = " "
+style = "bg:sapphire fg:crust"
+format = "[](fg:sapphire)[$symbol$state( \\($name\\))]($style)[](fg:sapphire) "
+
+# Right-hand side of line 1
+[status]
+disabled = false
+symbol = "✘ "
+style = "bold red"
+format = "[$symbol$status]($style) "
+
+[jobs]
+symbol = "✦ "
+style = "bold teal"
+format = "[$symbol$number]($style) "
+
+[cmd_duration]
+min_time = 2000
+style = "yellow"
+format = "[ $duration]($style) "
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "overlay1"
+format = "[ $time]($style)"
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"

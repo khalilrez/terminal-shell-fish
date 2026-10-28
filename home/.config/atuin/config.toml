@@ -1,0 +1,21 @@
+# atuin: full-text searchable shell history on Ctrl+R.
+# Optional sync across machines (end-to-end encrypted): `atuin register` on the
+# first machine, then `atuin login` on the others.
+
+style = "compact"
+inline_height = 20
+show_preview = true
+show_help = false
+search_mode = "fuzzy"
+filter_mode = "global"
+filter_mode_shell_up_key_binding = "session"
+# Enter runs the selected command; Tab puts it on the prompt for editing
+enter_accept = true
+update_check = false
+secrets_filter = true
+
+[theme]
+name = "default"
+
+[sync]
+records = true
